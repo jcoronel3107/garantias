@@ -77,6 +77,7 @@ class ContratoController extends Controller
             $contrato->Nombre_Partida = $request->Nombre_Partida;
             $contrato->Observaciones = $request->Observaciones;
             $contrato->Plazo_Contrato = $request->Plazo_Contrato;
+            $contrato->Fecha_Suscripcion = $request->Fecha_Suscripcion;
             $contrato->Estado = $request->Estado;
             $contrato->save();
             Session::flash('Registro_Almacenado',"Registro Almacenado con Exito!!!");
@@ -107,12 +108,11 @@ class ContratoController extends Controller
     public function edit($id)
     {
         if ( Auth::check() ) {
-            $afianzados = DB::table('afianzados')->select('afianzado')->get();
-            $afianzado = DB::table('afianzados')
-            ->where('id', $id)
-            ->value('afianzado');
+            $afianzados = DB::table('afianzados')->select('id','afianzado')->get();
+            
             $contrato = Contrato::findOrFail( $id );
-            return view( "contrato.edit", compact("contrato","afianzados","afianzado"));
+            ($contrato);
+            return view( "contrato.edit", compact("contrato","afianzados"));
         } else {
             return view( "/auth.login" );
         }

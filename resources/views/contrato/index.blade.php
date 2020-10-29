@@ -67,35 +67,36 @@
 		<table class="table p-3 table-hover table-responsive table-condensed">
 			<thead>
 				<tr class="table-primary">
-					<td>Opciones</td>
+					
 					<td>id</td>
 					<td>Codigo_Contrato</td>
 					<td>Nombre_Contrato</td>
-					<td>Afianzado_id</td>
+					
 					<td>Administrador</td>
 					<td>Mail_Administrador</td>
 					<td>Numero_Partida</td>
 					<td>Nombre_Partida</td>
-					<td>Observaciones</td>
+					
 					<td>Plazo_Contrato</td>
+					<td>Opciones</td>
 			</thead>
 			<tbody>
 				@foreach($contratos as $contrato)
 				<tr>
-					<td>
-						<a class="btn btn-outline-danger" href="{{route('contrato.edit',$contrato->id)}}" role="button">Editar</a>
-					</td>
+					
 					<td>{{$contrato->id}}</td>
 					<td>{{$contrato->Codigo_Contrato}}</td>
 					<td>{{$contrato->Nombre_Contrato}}</td>
-					<td>{{$contrato->afianzado_id}}</td>
-					<td>{{$contrato->administrador}}.USD</td>
+					
+					<td>{{$contrato->administrador}}</td>
 					<td>{{$contrato->mail_administrador}}</td>
 					<td>{{$contrato->Numero_Partida}}</td>
 					<td>{{$contrato->Nombre_Partida}}</td>
-					<td>{{$contrato->Observaciones}}</td>
+					
 					<td>{{$contrato->Plazo_Contrato}}</td>
-
+					<td>
+						<a class="btn btn-outline-danger" href="{{route('contrato.edit',$contrato->id)}}" role="button">Editar</a>
+					</td>
 				</tr>
 				@endforeach
 				</tr>

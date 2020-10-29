@@ -25,6 +25,7 @@ class CreateContratosTable extends Migration
             $table->string('Nombre_Partida')->nullable();
             $table->string('Observaciones',500)->nullable();
             $table->integer('Plazo_Contrato');
+            $table->date('Fecha_Suscripcion');
             $table->integer('Estado');
             $table->timestamps();
             $table->foreign('afianzado_id')->references('id')->on('afianzados')

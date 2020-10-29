@@ -99,7 +99,7 @@ Route::get('/prueba/',function(){
 
 	$contratos = DB::table('contratos')
         ->join('afianzados', 'afianzado_id', '=', 'afianzados.id')
-        ->select('Codigo_Contrato', 'Nombre_Contrato','afianzado_id','afianzados.afianzado','administrador','mail_administrador','Observaciones','Plazo_Contrato')
+        ->select('Codigo_Contrato', 'Nombre_Contrato','afianzado_id','afianzados.afianzado','administrador','mail_administrador','Observaciones','Plazo_Contrato','Fecha_Suscripcion')
         ->get();
 	return $contratos;
 });
@@ -111,10 +111,10 @@ Route::get('/prueba2/',function(){
     ->join('contratos','contrato_id','=','contratos.id')
     ->select('polizas.id','Codigo_Poliza','Valor_Poliza','Tipo_Poliza','Vigencia_Desde','Plazo',
      'aseguradora_id','aseguradoras.Razon_Social as Razon_Social','contrato_id',
-     'contratos.Codigo_Contrato as Codigo_Contrato','Estado','Renovacion','Fecha_Cierre',
+     'contratos.Codigo_Contrato as Codigo_Contrato','polizas.Estado','Renovacion','Fecha_Cierre',
      'polizas.created_at',DB::raw('adddate(Vigencia_Desde, Plazo) as Vigecia_Hasta'),DB::raw('DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()) as Dias_Restantes'),
     )
-    ->where('Estado', '=','1')
+    ->where('polizas.Estado', '=','1')
     ->where(DB::raw('DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()' <= 15))
     ->get();
 	return $polizas;

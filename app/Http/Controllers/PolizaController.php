@@ -40,6 +40,7 @@ class PolizaController extends Controller
         {
             $query = trim($request->get('searchText'));
             $polizas = Poliza::where("Codigo_Poliza",'LIKE','%'.$query.'%')
+              ->where("Estado","=","1")
               ->OrderBy('Codigo_Poliza','desc')
               ->paginate(5);
             return view( "/poliza.index", compact( "polizas","query" ) );
@@ -54,8 +55,9 @@ class PolizaController extends Controller
     public function create()
     {
         if ( Auth::check() ) {
-            $contratos = DB::table('contratos')->select('Nombre_Contrato')->get();
-            $aseguradoras = DB::table('aseguradoras')->select('Razon_Social')->get();
+            $contratos = DB::table('contratos')->select('id','Nombre_Contrato')->get();
+            $aseguradoras = DB::table('aseguradoras')->select('id','Razon_Social')->get();
+            //dd($contratos);
             return view( "/poliza.crear", compact("contratos","aseguradoras"));
         } else {
             return view( "/auth.login" );
@@ -71,18 +73,18 @@ class PolizaController extends Controller
     public function store(SavePolizaRequest $request)
     {
         if ( Auth::check() ) {
-            $contrato_id = Contrato::where("Nombre_Contrato",$request->contrato_id)->value('id');
-            $aseguradora_id = Aseguradora::where("Razon_Social",$request->Aseguradora)->value('id');
+            
+            
             $poliza = new Poliza;
             $poliza->Codigo_Poliza = $request->Codigo_Poliza;
             $poliza->Valor_Poliza = $request->Valor_Poliza;
             $poliza->Tipo_Poliza = $request->Tipo_Poliza;
             $poliza->Vigencia_Desde = $request->Vigencia_Desde;
             $poliza->Plazo = $request->Plazo;
-            $poliza->aseguradora_id = $aseguradora_id;
-            $poliza->contrato_id = $contrato_id;
+            $poliza->aseguradora_id = $request->Aseguradora;
+            $poliza->contrato_id = $request->contrato_id;
             $poliza->Estado = '1';
-            $poliza->Renovacion = $request->Renovacion; ;
+            $poliza->Renovacion = $request->Renovacion;
             $poliza->save();
             Session::flash('Registro_Almacenado',"Registro Almacenado con Exito!!!");
 
@@ -112,9 +114,10 @@ class PolizaController extends Controller
     public function edit($id)
     {
         if ( Auth::check() ) {
-            $contratos = DB::table('contratos')->select('Nombre_Contrato')->get();
+            $contratos = DB::table('contratos')->select('id','Nombre_Contrato')->get();
             $aseguradoras = DB::table('aseguradoras')->select('Razon_Social')->get();
             $poliza = Poliza::findOrFail( $id );
+
             return view( "poliza.edit", compact("poliza","contratos","aseguradoras"));
         } else {
             return view( "/auth.login" );

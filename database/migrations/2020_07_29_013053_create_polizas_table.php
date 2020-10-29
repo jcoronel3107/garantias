@@ -24,7 +24,7 @@ class CreatePolizasTable extends Migration
             $table->unsignedBigInteger('aseguradora_id');
             $table->unsignedBigInteger('contrato_id');
             $table->string('Estado',3);
-            $table->string('Renovacion',3)->default(0);
+            $table->string('Renovacion',3)->nullable()->default(0);
             $table->date('Fecha_Cierre')->nullable()->default(null);
             $table->timestamps();
             $table->foreign('aseguradora_id')->references('id')->on('aseguradoras')

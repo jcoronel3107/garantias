@@ -76,36 +76,35 @@
 		</ul>
 		<hr style="border:2px;">
 		@include('poliza.search')
-		<table class="table table-hover table-responsive table_condensed">
+		<table class="table table-hover ">
 			<thead>
 				<tr class="table-primary">
-					<td>Opciones</td>
+					
 					<td>Codigo_Poliza</td>
 					<td>Valor_Poliza</td>
 					<td>Tipo_Poliza</td>
 					<td>Vigencia_Desde</td>
 					<td>Plazo</td>
 					<td>Estado</td>
-					<td>Renovacion</td>
-					<td>Fecha_Cierre</td>
+					
+					<td>Opciones</td>
 			</thead>
 			<tbody>
 				@foreach($polizas as $poliza)
 				<tr>
-					<td>
-						<a class="btn btn-outline-danger " href="{{route('poliza.edit',$poliza->id)}}" role="button"><i class="fa fa-pencil fa-fw"></i></a>
-
-						<a class="btn btn-outline-danger" href="{{route('poliza.notificar',$poliza->id)}}" role="button"><i class="fa fa-paper-plane" aria-hidden="true"></i></a>
-					</td>
+					
 					<td>{{$poliza->Codigo_Poliza}}</td>
-					<td>USD${{$poliza->Valor_Poliza}}</td>
+					<td>USD $.{{$poliza->Valor_Poliza}}</td>
 					<td>{{$poliza->Tipo_Poliza}}</td>
 					<td>{{$poliza->Vigencia_Desde}}</td>
 					<td>{{$poliza->Plazo}}</td>
 					<td>{{$poliza->Estado}}</td>
-					<td>{{$poliza->Renovacion}}</td>
-					<td>{{$poliza->Fecha_Cierre}}</td>
+					
+					<td>
+						<a class="btn btn-outline-danger " href="{{route('poliza.edit',$poliza->id)}}" role="button"><i class="far fa-edit"></i></a>
 
+						<a class="btn btn-outline-danger" href="{{route('poliza.notificar',$poliza->id)}}" role="button"><i class="fa fa-paper-plane" aria-hidden="true"></i></a>
+					</td>
 				</tr>
 				@endforeach
 				</tr>

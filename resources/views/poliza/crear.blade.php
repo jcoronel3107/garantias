@@ -11,21 +11,57 @@
 			<form method="post" action="/poliza">
 				<div class="form-row">
 					{{csrf_field()}}
-					<div class="form-group input-group  col-md-6">
+					<div class="form-group input-group  col-md-3">
 						<div class="input-group-prepend">
 							<span class="input-group-text">Tipo_Poliza</span>
 						</div>
-						<select class="form-control selectpicker" name="Tipo_Poliza" data-live-search="true" required>
-							<option value={{old('Tipo_Poliza')}}>Elija</option>
+						<select class="form-control" required="" name="Tipo_Poliza">
+							<option value=""></option>
 							<option>Buen Uso Anticipo</option>
 							<option>Fiel Cumplimiento</option>
 						</select>
 					</div>
-					<div class="form-group input-group  col-md-6">
+					<div class="form-group input-group  col-md-3">
 						<div class="input-group-prepend">
 							<span class="input-group-text">Codigo_Poliza</span>
 						</div>
-						<input type="text" maxlength="50" required="" name="Codigo_Poliza" placeholder="Digite el Codigo de la poliza" class="form-control">
+						<input type="text" required="" maxlength="50" name="Codigo_Poliza" placeholder="Digite el Codigo de la poliza" class="form-control">
+					</div>
+					<div class="form-group input-group col-md-3 col-sm-6">
+						<div class="input-group-prepend">
+								<span class="input-group-text">Es Renovacion?</span>
+						</div>
+						<select class="form-control" required="" onchange="habilitar(this.value);" id="qrenov" name="qrenov">
+							<option value="" ></option>
+							<option value="1">SI</option>
+							<option value="2">NO</option>
+						</select>
+					</div>
+					<div class="form-group input-group col-md-3 col-sm-6">
+						<div class="input-group-prepend">
+								<span class="input-group-text"># Renovacion</span>
+						</div>
+						<select class="form-control" id="Renovacion" name="Renovacion">
+							<option value="" selected>Seleccione...</option>
+							<option>0</option>
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group input-group col-md-12">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Contrato para Asociar</span>
+						</div>
+						<select class="form-control" required=""  name="contrato_id">
+						<option value=""></option>
+							@foreach($contratos as $contrato)
+								<option value="{{$contrato->id}}">{{$contrato->Nombre_Contrato}}</option>
+							@endforeach
+						</select>
 					</div>
 				</div>
 				<div class="form-row">
@@ -40,9 +76,9 @@
 							<span class="input-group-text">Aseguradora</span>
 						</div>
 						<select class="form-control selectpicker" name="Aseguradora" data-live-search="true" required>
-							<option value="" selected>Elija</option>
+							<option value=""></option>
 							@foreach($aseguradoras as $aseguradora)
-								<option>{{$aseguradora->Razon_Social}}</option>
+								<option value="{{$aseguradora->id}}">{{$aseguradora->Razon_Social}}</option>
 							@endforeach
 						</select>
 					</div>
@@ -61,19 +97,7 @@
 						<input type="date" required="" name="Vigencia_Desde" class="form-control" placeholder="Digite Fecha de emision Poliza">
 					</div>
 				</div>
-				<div class="form-row">
-					<div class="form-group input-group col-md-12">
-						<div class="input-group-prepend">
-							<span class="input-group-text">Contrato para Asociar</span>
-						</div>
-						<select class="form-control" required name="contrato_id">
-							<option value="" selected>Seleccione...</option>
-							@foreach($contratos as $contrato)
-								<option>{{$contrato->Nombre_Contrato}}</option>
-							@endforeach
-						</select>
-					</div>
-				</div>
+				
 				<div class="form-row">
 					<div class="form-group input-group col-md-3">
 						<div class="input-group-prepend">
@@ -81,19 +105,7 @@
 						</div>
 						<input type="text" disabled name="Estado" class="form-control" value="Activa">
 					</div>
-					<div class="form-group input-group col-md-3">
-						<div class="input-group-prepend">
-								<span class="input-group-text">Renovacion</span>
-						</div>
-						<select class="form-control" required name="Renovacion">
-							<option value="" selected>Seleccione...</option>
-							<option>0</option>
-							<option>1</option>
-							<option>2</option>
-							<option>3</option>
-							<option>4</option>
-						</select>
-					</div>
+					
 				</div>
 				<div class="form-group">
 					<button type="submit" name="Enviar" value="Enviar" class="btn btn-success">Registrar</button>
@@ -109,7 +121,25 @@
 					<div class="alert alert-danger" role="alert">{{$error}}</div>
 				@endforeach
 			@endif
+		 @push('scripts')
+    		<script type="text/javascript">
+    			function habilitar(value)
+				{		
+					if(value=="1" || value==true)
+					{
+						// habilitamos
+						document.getElementById("Renovacion").disabled=false;
+						document.getElementById("Renovacion").required=true;
+					}else if(value=="2" || value==false){
+						// deshabilitamos
+						document.getElementById("Renovacion").disabled=true;
+						document.getElementById("Renovacion").required=false;
+					}
+				}
+    		</script>
+    	 @endpush('scripts')
 		@else
   			<p>Lo sentimos, No Tienes Permisos de Creación.</p>
 		@endcan
+
 @endsection @section( "piepagina" ) @endsection

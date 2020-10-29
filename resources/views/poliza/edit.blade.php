@@ -17,7 +17,7 @@
 						<div class="input-group-prepend">
 							<span class="input-group-text">Tipo_Poliza</span>
 						</div>
-						<select class="form-control selectpicker" name="Tipo_Poliza" data-live-search="true" required>
+						<select class="form-control selectpicker" name="Tipo_Poliza"  required="">
 							<option selected >{{old('Tipo_Poliza',$poliza->Tipo_Poliza)}}</option>
 							<option>Buen Uso Anticipo</option>
 							<option>Fiel Cumplimiento</option>
@@ -60,7 +60,7 @@
 						<div class="input-group-prepend">
 							<span class="input-group-text">Vigencia_Desde</span>
 						</div>
-						<input type="date" required="" name="Vigencia_Desde" class="form-control" placeholder="Digite Fecha de emision Poliza" value="{{old('Vigencia_Desde',$poliza->Vigencia_Desde)}}">
+						<input type="input" required="" name="Vigencia_Desde" class="form-control" placeholder="Digite Fecha de emision Poliza" value="{{old('Vigencia_Desde',$poliza->Vigencia_Desde)}}">
 					</div>
 				</div>
 				<div class="form-row">

@@ -67,23 +67,24 @@
 		<table class="table table-hover table_condensed">
 			<thead>
 				<tr class="table-primary">
-					<td>Opciones</td>
+					
 					<td>id</td>
 					<td>Razon_Social</td>
 					<td>Ruc</td>
 					<td>created_at</td>
+					<td>Opciones</td>
 			</thead>
 			<tbody>
 				@foreach($aseguradoras as $aseguradora)
 				<tr>
-					<td>
-						<a class="btn btn-outline-danger" href="{{route('aseguradora.edit',$aseguradora->id)}}" role="button">Editar</a>
-					</td>
+					
 					<td>{{$aseguradora->id}}</td>
 					<td>{{$aseguradora->Razon_Social}}</td>
 					<td>{{$aseguradora->Ruc}}</td>
 					<td>{{$aseguradora->created_at}}</td>
-
+					<td>
+						<a class="btn btn-outline-danger" href="{{route('aseguradora.edit',$aseguradora->id)}}" role="button">Editar</a>
+					</td>
 				</tr>
 				@endforeach
 				</tr>

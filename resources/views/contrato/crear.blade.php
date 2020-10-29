@@ -38,7 +38,7 @@
 						<div class="input-group-prepend">
 							<span class="input-group-text">Fecha_Suscripcion</span>
 						</div>
-						<input type="date" required=""  name="Fecha_Suscripcion" min="1979-12-31" class="form-control" id="Fecha_Suscripcion">
+						<input type="date" required=""  name="Fecha_Suscripcion" min="2020-01-01" class="form-control" id="Fecha_Suscripcion">
 					</div>
 				</div>
 				<div class="form-row">
@@ -96,8 +96,9 @@
 						<div class="input-group-prepend">
 							<span class="input-group-text">Estado</span>
 						</div>
-						<select class="form-control" id="Estado" name="Estado" disabled="true" >
-							<option selected="Activo" value="1">Activo</option>
+						<select class="form-control" id="Estado" name="Estado"  >
+							<option >Seleccione...</option>
+							<option value="1">Activo</option>
 							<option value="0">Pasivo</option>
 						</select>
 					</div>

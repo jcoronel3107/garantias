@@ -39,7 +39,7 @@
 						<div class="input-group-prepend">
 							<span class="input-group-text">Fecha_Suscripcion</span>
 						</div>
-						<input type="date" required="" name="Fecha_Suscripcion" value="{{old('Fecha_Suscripcion',$contrato->Fecha_Suscripcion)}}" class="form-control" id="Fecha_Suscripcion" placeholder="Digite Fecha_Suscripcion">
+						<input type="input" required="" name="Fecha_Suscripcion" value="{{old('Fecha_Suscripcion',$contrato->Fecha_Suscripcion)}}" class="form-control" id="Fecha_Suscripcion" placeholder="Digite Fecha_Suscripcion">
 					</div>
 				</div>
 				<div class="form-row">
@@ -48,9 +48,9 @@
 							<span class="input-group-text">Afianzado</span>
 						</div>
 						<select class="form-control" name="afianzado_id">
-							<option selected>{{old('afianzado_id',$afianzado)}}</option>
+							<option value="{{$contrato->afianzado->id}}" selected="{{$contrato->afianzado->afianzado}}">{{$contrato->afianzado->afianzado}} </option>
 							@foreach($afianzados as $user)
-								<option>{{$user->afianzado}}</option>
+								<option value="{{$user->id}}">{{$user->afianzado}}</option>
 							@endforeach
 						</select>
 					</div>
@@ -60,13 +60,10 @@
 						<div class="input-group-prepend">
 							<span class="input-group-text">Administrador</span>
 						</div>
-						<select class="form-control" name="administrador">
-							<option selected>{{old('administrador',$contrato->administrador)}}</option>
-							@foreach($afianzados as $user)
-								<option>{{$user->afianzado}}</option>
-							@endforeach
-						</select>
+						<input type="input" value="{{old('administrador',$contrato->administrador)}}" required="" name="administrador" class="form-control" placeholder="Digite Nombres Completos del Administrador">
 					</div>
+						
+				
 				</div>
 				<div class="form-row">
 					<div class="form-group input-group  col-md-8">
