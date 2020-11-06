@@ -110,9 +110,8 @@ Route::get('/prueba2/',function(){
     ->join('aseguradoras', 'aseguradora_id', '=', 'aseguradoras.id')
     ->join('contratos','contrato_id','=','contratos.id')
     ->select('polizas.id','Codigo_Poliza','Valor_Poliza','Tipo_Poliza','Vigencia_Desde','Plazo',
-     'aseguradora_id','aseguradoras.Razon_Social as Razon_Social','contrato_id',
-     'contratos.Codigo_Contrato as Codigo_Contrato','polizas.Estado','Renovacion','Fecha_Cierre',
-     'polizas.created_at',DB::raw('adddate(Vigencia_Desde, Plazo) as Vigecia_Hasta'),DB::raw('DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()) as Dias_Restantes'),
+     'aseguradoras.Razon_Social as Razon_Social',
+     'contratos.Codigo_Contrato','polizas.Estado','Renovacion',DB::raw('adddate(Vigencia_Desde, Plazo) as Vigecia_Hasta'),DB::raw('DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()) as Dias_Restantes'),
     )
     ->where('polizas.Estado', '=','1')
     ->where(DB::raw('DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()' <= 15))

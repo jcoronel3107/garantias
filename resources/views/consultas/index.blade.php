@@ -62,6 +62,12 @@
 	  					<label class="custom-control-label" for="customCheck8">Polizas x vencer 30 dias</label>
 					</div>
 				</div>
+				<div class="form-group input-group align-items-left col-md-4">
+					<div class="custom-control custom-radio">
+	  					<input type="radio" class="custom-control-input" id="customCheck9" name="consulta" value="9">
+	  					<label class="custom-control-label" for="customCheck9">Polizas x Contrato</label>
+					</div>
+				</div>
 
 		    </div>
 				<hr style="border:2px;">

@@ -61,7 +61,7 @@ class ConsultaController extends Controller
         $polizas = DB::table('polizas')
         ->join('aseguradoras', 'aseguradora_id', '=', 'aseguradoras.id')
         ->join('contratos','contrato_id','=','contratos.id')
-        ->select('Codigo_Poliza', 'Valor_Poliza','Tipo_Poliza','Vigencia_Desde','Plazo','aseguradora_id','aseguradoras.Razon_Social as Razon_Social','contrato_id','contratos.Codigo_Contrato as Codigo_Contrato','Estado','Renovacion','Fecha_Cierre','polizas.created_at')
+        ->select('Codigo_Poliza', 'Valor_Poliza','Tipo_Poliza','Vigencia_Desde','Plazo','aseguradora_id','aseguradoras.Razon_Social as Razon_Social','contrato_id','contratos.Codigo_Contrato as Codigo_Contrato','polizas.Estado','Renovacion','Fecha_Cierre','polizas.created_at')
         ->where('Estado', '=','1')
         ->get();
         return view( "consultas.polizasactivas", compact( "polizas" ) );
@@ -72,7 +72,7 @@ class ConsultaController extends Controller
         $polizas = DB::table('polizas')
         ->join('aseguradoras', 'aseguradora_id', '=', 'aseguradoras.id')
         ->join('contratos','contrato_id','=','contratos.id')
-        ->select('Codigo_Poliza', 'Valor_Poliza','Tipo_Poliza','Vigencia_Desde','Plazo','aseguradora_id','aseguradoras.Razon_Social as Razon_Social','contrato_id','contratos.Codigo_Contrato as Codigo_Contrato','Estado','Renovacion','Fecha_Cierre','polizas.created_at')
+        ->select('Codigo_Poliza', 'Valor_Poliza','Tipo_Poliza','Vigencia_Desde','Plazo','aseguradora_id','aseguradoras.Razon_Social as Razon_Social','contrato_id','contratos.Codigo_Contrato as Codigo_Contrato','polizas.Estado','Renovacion','Fecha_Cierre','polizas.created_at')
         ->get();
         return view( "consultas.polizastodas", compact( "polizas" ) );
     }
@@ -82,7 +82,7 @@ class ConsultaController extends Controller
         $polizas = DB::table('polizas')
         ->join('aseguradoras', 'aseguradora_id', '=', 'aseguradoras.id')
         ->join('contratos','contrato_id','=','contratos.id')
-        ->select('Codigo_Poliza', 'Valor_Poliza','Tipo_Poliza','Vigencia_Desde','Plazo','aseguradora_id','aseguradoras.Razon_Social as Razon_Social','contrato_id','contratos.Codigo_Contrato as Codigo_Contrato','Estado','Renovacion','Fecha_Cierre','polizas.created_at')
+        ->select('Codigo_Poliza', 'Valor_Poliza','Tipo_Poliza','Vigencia_Desde','Plazo','aseguradora_id','aseguradoras.Razon_Social as Razon_Social','contrato_id','contratos.Codigo_Contrato as Codigo_Contrato','polizas.Estado','Renovacion','Fecha_Cierre','polizas.created_at')
         ->where('Tipo_Poliza', '=','Buen Uso Anticipo')
         ->get();
 
@@ -94,9 +94,9 @@ class ConsultaController extends Controller
         $polizas = DB::table('polizas')
         ->join('aseguradoras', 'aseguradora_id', '=', 'aseguradoras.id')
         ->join('contratos','contrato_id','=','contratos.id')
-        ->select('Codigo_Poliza', 'Valor_Poliza','Tipo_Poliza','Vigencia_Desde','Plazo','aseguradora_id','aseguradoras.Razon_Social as Razon_Social','contrato_id','contratos.Codigo_Contrato as Codigo_Contrato','Estado','Renovacion','Fecha_Cierre','polizas.created_at')
+        ->select('Codigo_Poliza', 'Valor_Poliza','Tipo_Poliza','Vigencia_Desde','Plazo','aseguradora_id','aseguradoras.Razon_Social as Razon_Social','contrato_id','contratos.Codigo_Contrato as Codigo_Contrato','polizas.Estado','Renovacion','Fecha_Cierre','polizas.created_at')
         ->where('Tipo_Poliza', '=','Fiel Cumplimiento')
-        ->where('Estado', '=','1')
+        ->where('polizas.Estado', '=','1')
         ->get();
 
         return view( "consultas.polizasfiel", compact( "polizas" ) );
@@ -117,7 +117,7 @@ class ConsultaController extends Controller
                  'aseguradora_id','aseguradoras.Razon_Social as Razon_Social','contrato_id',
                  'contratos.Codigo_Contrato as Codigo_Contrato','Estado','Renovacion','Fecha_Cierre',
                  'polizas.created_at'))
-        ->where('Estado', '=','1')
+        ->where('polizas.Estado', '=','1')
         ->where('DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()) <= ? and DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()) >= ?',[15,0])
         ->get();
 

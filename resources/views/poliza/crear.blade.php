@@ -134,6 +134,7 @@
 						// deshabilitamos
 						document.getElementById("Renovacion").disabled=true;
 						document.getElementById("Renovacion").required=false;
+						document.getElementById("Renovacion").value="0";
 					}
 				}
     		</script>
