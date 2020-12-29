@@ -42,7 +42,7 @@ class PolizaController extends Controller
             $polizas = Poliza::where("Codigo_Poliza",'LIKE','%'.$query.'%')
               ->where("Estado","=","1")
               ->OrderBy('Codigo_Poliza','desc')
-              ->paginate(5);
+              ->paginate(7);
             return view( "/poliza.index", compact( "polizas","query" ) );
         }
     }
@@ -85,9 +85,9 @@ class PolizaController extends Controller
             $poliza->contrato_id = $request->contrato_id;
             $poliza->Estado = '1';
             $poliza->Renovacion = $request->Renovacion;
+            
             $poliza->save();
             Session::flash('Registro_Almacenado',"Registro Almacenado con Exito!!!");
-
             return redirect( "/poliza" );
         } else {
             return view( "/auth.login" );
@@ -115,7 +115,7 @@ class PolizaController extends Controller
     {
         if ( Auth::check() ) {
             $contratos = DB::table('contratos')->select('id','Nombre_Contrato')->get();
-            $aseguradoras = DB::table('aseguradoras')->select('Razon_Social')->get();
+            $aseguradoras = DB::table('aseguradoras')->select('id','Razon_Social')->get();
             $poliza = Poliza::findOrFail( $id );
 
             return view( "poliza.edit", compact("poliza","contratos","aseguradoras"));
@@ -229,12 +229,11 @@ class PolizaController extends Controller
 
     public function notificar($id)
     {
-        if ( Auth::check() ) {
+       
           $poliza = Poliza::findOrFail( $id );
+          //dd($poliza);
           return view( "/poliza.notifica", compact("poliza"));
-        } else {
-            return view( "/auth.login" );
-        }
+       
     }
 
     public function notificacion(Request $request)

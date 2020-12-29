@@ -27,7 +27,8 @@ class ContratosImport extends DefaultValueBinder implements WithCustomValueBinde
             'Nombre_Partida'          =>$row[6],
             'Observaciones'           =>$row[7],
             'Plazo_Contrato'          =>$row[8],
-            'Estado'                  =>$row[9]
+            'Fecha_Suscripcion'       =>$row[9],
+            'Estado'                  =>$row[10]
         ]);
     }
 }

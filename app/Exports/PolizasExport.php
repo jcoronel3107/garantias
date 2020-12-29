@@ -16,15 +16,17 @@ class PolizasExport implements FromCollection, WithHeadings,ShouldAutoSize
     public function headings(): array
     {
         return [
-            '#',
+            
             'Codigo_Poliza',
             'Valor_Poliza',
             'Tipo_Poliza',
             'Vigencia_Desde',
             'Plazo',
+            'Aseguradora',
+            'Codigo_Contrato',
+            'Denominacion_Contrato',
             'Estado',
             'Renovacion',
-            'Fecha_Cierre',
             'Created_at',
             'Updated_at'
         ];
@@ -32,6 +34,13 @@ class PolizasExport implements FromCollection, WithHeadings,ShouldAutoSize
 
     public function collection()
     {
-        return Poliza::all();
+        $polizas = DB::table('polizas')
+        ->join('aseguradoras', 'aseguradora_id', '=', 'aseguradoras.id')
+        ->join('contratos','contrato_id','=','contratos.id')
+        ->select('Codigo_Poliza', 'Valor_Poliza','Tipo_Poliza','Vigencia_Desde','Plazo','aseguradoras.Razon_Social as Razon_Social','contratos.Codigo_Contrato as Codigo_Contrato','contratos.Nombre_Contrato as Denominacion_Contrato','polizas.Estado','Renovacion','polizas.created_at')
+        ->where('polizas.Estado', '=','1')
+        ->get();
+        //return Poliza::all();
+        return $polizas;
     }
 }

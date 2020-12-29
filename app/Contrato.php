@@ -18,6 +18,7 @@ class Contrato extends Model
 		"Nombre_Partida",
 		"Observaciones",
 		"Plazo_Contrato",
+		"Fecha_Suscripcion",
 		"Estado"
 	];
 

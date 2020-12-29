@@ -35,7 +35,7 @@ class ContratoController extends Controller
             $query = trim($request->get('searchText'));
             $contratos = Contrato::where("Nombre_Contrato",'LIKE','%'.$query.'%')
               ->OrderBy('Nombre_Contrato','desc')
-              ->paginate(7);
+              ->paginate(10);
             return view( "/contrato.index", compact( "contratos","query" ) );
         }
     }

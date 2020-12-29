@@ -30,7 +30,9 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Opciones:</h6>
             <a class="collapse-item" href="/afianzado">Index</a>
-            <a class="collapse-item" href="/afianzados/importar">Importar</a>
+            @can('import')
+              <a class="collapse-item" href="/afianzados/importar">Importar</a>
+            @endcan
           </div>
         </div>
       </li>
@@ -57,8 +59,9 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Opciones</h6>
             <a class="collapse-item" href="/contrato">Index</a>
-            <a class="collapse-item" href="/contratos/importar">Importar</a>
-
+            @can('import')
+              <a class="collapse-item" href="/contratos/importar">Importar</a>
+            @endcan
           </div>
         </div>
       </li>
@@ -71,10 +74,11 @@
         <div id="collapseTransito" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Opciones</h6>
+            
             <a class="collapse-item" href="/poliza">Index</a>
-
+            @can('import')
             <a class="collapse-item" href="/polizas/importar">Importar</a>
-
+            @endcan
           </div>
         </div>
       </li>

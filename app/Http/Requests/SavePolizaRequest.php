@@ -29,7 +29,8 @@ class SavePolizaRequest extends FormRequest
             'Tipo_Poliza'=>'required',
             'Vigencia_Desde'=>'required',
             'Plazo'=>'required',
-            'contrato_id'=> 'required'
+            'contrato_id'=> 'required',
+            'Renovacion'=> 'required',
         ];
     }
 }

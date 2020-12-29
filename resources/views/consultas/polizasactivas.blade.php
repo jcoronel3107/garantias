@@ -14,46 +14,52 @@
 
 		    </li>
 		</ul>
+
 		<hr style="border:2px;">
+		@include('poliza.search2')
 		<table name="resultados" id="resultados" class="table table-hover table-responsive table_condensed">
 			<thead>
 				<tr class="table-primary">
+					<td>Id_Poliza</td>
 					<td>Codigo_Poliza</td>
 					<td>Valor_Poliza</td>
 					<td>Tipo_Poliza</td>
 					<td>Vigencia_Desde</td>
 					<td>Plazo</td>
-					<td>aseguradora_id</td>
 					<td>Aseguradora</td>
-					<td>contrato_id</td>
-					<td>Contrato</td>
+					
+					<td>Codigo_Contrato</td>
+					<td>Nombre_Contrato</td>
+					
+					
 					<td>Estado</td>
 					<td>Renovacion</td>
-					<td>Fecha_Cierre</td>
-					<td>created_at</td>
+					<td>Vigecia_Hasta</td>
+					<td>Dias_Restantes</td>
 			</thead>
 			<tbody>
 				@foreach($polizas as $poliza)
 				<tr>
-
+					<td>{{$poliza->id}}</td>
 					<td>{{$poliza->Codigo_Poliza}}</td>
 					<td>USD${{$poliza->Valor_Poliza}}</td>
 					<td>{{$poliza->Tipo_Poliza}}</td>
 					<td>{{$poliza->Vigencia_Desde}}</td>
 					<td>{{$poliza->Plazo}}</td>
-					<td>{{$poliza->aseguradora_id}}</td>
 					<td>{{$poliza->Razon_Social}}</td>
-					<td>{{$poliza->contrato_id}}</td>
 					<td>{{$poliza->Codigo_Contrato}}</td>
+					<td>{{$poliza->Nombre_Contrato}}</td>
 					<td>{{$poliza->Estado}}</td>
 					<td>{{$poliza->Renovacion}}</td>
-					<td>{{$poliza->Fecha_Cierre}}</td>
-					<td>{{$poliza->created_at}}</td>
+					<td>{{$poliza->Vigecia_Hasta}}</td>
+					<td>{{$poliza->Dias_Restantes}}</td>
+					
 
 				</tr>
 				@endforeach
 				</tr>
 			</tbody>
 			</table>
+			{{ $polizas -> appends(['searchText' => $query]) -> links() }}
 @endsection
 @section( "piepagina" ) @endsection

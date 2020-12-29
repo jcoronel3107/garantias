@@ -16,6 +16,8 @@ class Poliza extends Model
 		"Tipo_Poliza",
 		"Vigencia_Desde",
 		"Plazo",
+		"aseguradora_id",
+		"contrato_id",
 		"Estado",
 		"Renovacion",
 		"Fecha_Cierre"

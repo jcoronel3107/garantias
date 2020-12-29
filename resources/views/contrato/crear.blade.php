@@ -97,8 +97,8 @@
 							<span class="input-group-text">Estado</span>
 						</div>
 						<select class="form-control" id="Estado" name="Estado"  >
-							<option >Seleccione...</option>
-							<option value="1">Activo</option>
+							
+							<option value="1" selected="">Activo</option>
 							<option value="0">Pasivo</option>
 						</select>
 					</div>

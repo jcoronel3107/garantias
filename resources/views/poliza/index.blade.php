@@ -103,12 +103,26 @@
 					<td>
 						<a class="btn btn-outline-danger " href="{{route('poliza.edit',$poliza->id)}}" role="button"><i class="far fa-edit"></i></a>
 
-						<a class="btn btn-outline-danger" href="{{route('poliza.notificar',$poliza->id)}}" role="button"><i class="fa fa-paper-plane" aria-hidden="true"></i></a>
+						<a class="btn btn-outline-danger" href="poliza/notificar/{{$poliza->id}}" role="button"><i class="fa fa-paper-plane" aria-hidden="true"></i></a>
 					</td>
 				</tr>
 				@endforeach
 				</tr>
 			</tbody>
+			<tfoot>
+				<tr class="table-primary">
+					
+					<td>Codigo_Poliza</td>
+					<td>Valor_Poliza</td>
+					<td>Tipo_Poliza</td>
+					<td>Vigencia_Desde</td>
+					<td>Plazo</td>
+					<td>Estado</td>
+					
+					<td>Opciones</td>
+				</tr>
+
+			</tfoot>
 		</table>
 		{{ $polizas -> appends(['searchText' => $query]) -> links() }}
 @endsection @section( "piepagina" ) @endsection

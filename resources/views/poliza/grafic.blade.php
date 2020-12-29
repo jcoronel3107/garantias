@@ -26,8 +26,8 @@
 								text: 'Grafica'
 					},
 					xAxis:{
-						/*categories:['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic',]*/
-						categories:['Ago','Sep','Oct','Nov','Dic',]
+						categories:['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic',]
+						/*categories:['Ago','Sep','Oct','Nov','Dic',]*/
 					},
 					yAxis:{
 						title:{
@@ -74,8 +74,8 @@
 								text: 'Grafica'
 					},
 					xAxis:{
-						/*categories:['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic',]*/
-						categories:['Ago','Sep','Oct','Nov','Dic',]
+						categories:['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic',]
+						/*categories:['Ago','Sep','Oct','Nov','Dic',]*/
 					},
 					yAxis:{
 						title:{

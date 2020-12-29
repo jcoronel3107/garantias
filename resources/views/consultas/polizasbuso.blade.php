@@ -23,13 +23,13 @@
 					<td>Tipo_Poliza</td>
 					<td>Vigencia_Desde</td>
 					<td>Plazo</td>
-					<td>aseguradora_id</td>
+					
 					<td>Aseguradora</td>
-					<td>contrato_id</td>
+					
 					<td>Contrato</td>
 					<td>Estado</td>
 					<td>Renovacion</td>
-					<td>Fecha_Cierre</td>
+					
 					<td>created_at</td>
 			</thead>
 			<tbody>
@@ -41,13 +41,13 @@
 					<td>{{$poliza->Tipo_Poliza}}</td>
 					<td>{{$poliza->Vigencia_Desde}}</td>
 					<td>{{$poliza->Plazo}}</td>
-					<td>{{$poliza->aseguradora_id}}</td>
+					
 					<td>{{$poliza->Razon_Social}}</td>
 					<td>{{$poliza->contrato_id}}</td>
-					<td>{{$poliza->Codigo_Contrato}}</td>
+					
 					<td>{{$poliza->Estado}}</td>
 					<td>{{$poliza->Renovacion}}</td>
-					<td>{{$poliza->Fecha_Cierre}}</td>
+					
 					<td>{{$poliza->created_at}}</td>
 
 				</tr>

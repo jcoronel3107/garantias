@@ -34,6 +34,7 @@ class PermissionsSeeder extends Seeder
         Permission::create(['name' => 'create aseguradora']);
         Permission::create(['name' => 'consult aseguradora']);
         Permission::create(['name' => 'view estadistica']);
+        Permission::create(['name' => 'send notification']);
 
         // create roles and assign existing permissions
         $role1 = Role::create(['name' => 'creador']);
@@ -50,14 +51,15 @@ class PermissionsSeeder extends Seeder
         $role1->givePermissionTo('create afianzados');
         $role1->givePermissionTo('consult afianzados');
         $role1->givePermissionTo('view estadistica');
-
+        $role1->givePermissionTo('send notification');
 
         $role2 = Role::create(['name' => 'consultor']);
         $role2->givePermissionTo('view estadistica');
 
 
-        $role3 = Role::create(['name' => 'super-admin']);
+        $role3 = Role::create(['name' => 'Super-Admin']);
         // gets all permissions via Gate::before rule; see AuthServiceProvider
+        
 
         // create demo users
         $user = Factory(App\User::class)->create([

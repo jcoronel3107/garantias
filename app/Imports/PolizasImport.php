@@ -6,9 +6,11 @@ use App\Poliza;
 use Maatwebsite\Excel\Concerns\ToModel;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
+
 use PhpOffice\PhpSpreadsheet\Cell\DefaultValueBinder;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Illuminate\ Support\Carbon;
+
 
 class PolizasImport extends DefaultValueBinder implements WithCustomValueBinder, ToModel
 {
@@ -25,9 +27,10 @@ class PolizasImport extends DefaultValueBinder implements WithCustomValueBinder,
             'Tipo_Poliza'          =>$row[2],
             'Vigencia_Desde'       =>$row[3],
             'Plazo'                =>$row[4],
-            'Estado'               =>$row[5],
-            'Renovacion'           =>$row[6],
-            'Fecha_Cierre'         =>$row[7]
+            'aseguradora_id'       =>$row[5],
+            'contrato_id'          =>$row[6],
+            'Estado'               =>$row[7],
+            'Renovacion'           =>$row[8]
             ]);
     }
 }

@@ -41,10 +41,10 @@
 						<div class="input-group-prepend">
 							<span class="input-group-text">Aseguradora</span>
 						</div>
-						<select class="form-control selectpicker" name="Aseguradora" data-live-search="true" required>
-							<option selected>{{old('Aseguradora',$poliza->aseguradora->Razon_Social)}}</option>
+						<select class="form-control selectpicker" name="aseguradora_id" data-live-search="true" required>
+							<option value="{{$poliza->aseguradora->id}}" selected>{{old('Aseguradora',$poliza->aseguradora->Razon_Social)}}</option>
 							@foreach($aseguradoras as $aseguradora)
-								<option>{{$aseguradora->Razon_Social}}</option>
+								<option value="{{$aseguradora->id}}">{{$aseguradora->Razon_Social}}</option>
 							@endforeach
 						</select>
 					</div>
@@ -68,10 +68,10 @@
 						<div class="input-group-prepend">
 							<span class="input-group-text">Contrato para Asociar</span>
 						</div>
-						<select class="form-control" required name="Nombre_Contrato">
-							<option selected>{{old('Nombre_Contrato',$poliza->contrato->Nombre_Contrato)}}</option>
+						<select class="form-control" required="" name="contrato_id">
+							<option value="{{$poliza->contrato->id}}" selected>{{old('Nombre_Contrato',$poliza->contrato->Nombre_Contrato)}}</option>
 							@foreach($contratos as $contrat)
-								<option>{{$contrat->Nombre_Contrato}}</option>
+								<option value="{{$contrat->id}}">{{$contrat->Nombre_Contrato}}</option>
 							@endforeach
 						</select>
 					</div>
@@ -82,7 +82,7 @@
 							<span class="input-group-text">Estado</span>
 						</div>
 						<select data-toggle="tooltip" data-placement="right" title="Activa=1 Desactiva=0" class="form-control" required id="Estado" name="Estado" onchange="showContent()">
-							<option selected>{{old('Estado',$poliza->Estado)}}</option>
+							<option value="{{$poliza->Estado}}" selected>{{old('Estado',$poliza->Estado)}}</option>
 							<option value="1">1</option>
 							<option value="0">0</option>
 
