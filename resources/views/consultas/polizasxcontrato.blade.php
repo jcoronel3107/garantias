@@ -6,18 +6,20 @@
 	@endsection
 
 	@section( "cuerpo" )
-		<h1 class="mt-5 shadow p-3 mb-5 bg-white rounded text-danger">Consulta Polizas Fiel Cumplimiento Vigentes</h1>
+		<h1 class="mt-5 shadow p-3 mb-5 bg-white rounded text-danger">Consulta Polizas x Contrato</h1>
 		<ul class="nav justify-content-end">
 		  <li class="nav-item">
-		      <a class="btn btn-outline-primary" href="/consultas/">Regresar</a>
-		      <a class="btn btn-outline-success" href="/polizas5/export5/">Exporta Excel</a>
+		  	  <a class="btn btn-outline-primary" href="/consultas/">Regresar</a>
+		      <a class="btn btn-outline-success" href="/polizas9/export9/">Exporta Excel</a>
+
 		    </li>
 		</ul>
+
 		<hr style="border:2px;">
-		<form method="get" action="/consult/polizas5/" autocomplete="off" role="search" >
+		<form method="get" action="/consult/polizas9/" autocomplete="off" role="search" >
 			<div class="form-group col-12">
 				<div class="input-group "> {{csrf_field()}}
-					<input type="text" class="form-control" value="{{$query}}" name="searchText" placeholder="Buscar x Administrador..." >
+					<input type="text" class="form-control" value="{{$query}}" name="searchText" placeholder="Buscar x Contrato..." >
 					<span class="input-group-append">
 						<button type="submit" class="btn btn-primary">Buscar</button>
 					</span>
@@ -38,8 +40,6 @@
 					<td>Afianzado</td>
 					<td>Codigo_Contrato</td>
 					<td>Nombre_Contrato</td>
-					<td>Administrador</td>
-					
 					<td>Estado</td>
 					<td>Renovacion</td>
 					<td>Vigecia_Hasta</td>
@@ -48,7 +48,6 @@
 			<tbody>
 				@foreach($polizas as $poliza)
 				<tr>
-
 					<td>{{$poliza->id}}</td>
 					<td>{{$poliza->Codigo_Poliza}}</td>
 					<td>USD${{$poliza->Valor_Poliza}}</td>
@@ -59,7 +58,6 @@
 					<td>{{$poliza->afianzado}}</td>
 					<td>{{$poliza->Codigo_Contrato}}</td>
 					<td>{{$poliza->Nombre_Contrato}}</td>
-					<td>{{$poliza->administrador}}</td>
 					<td>{{$poliza->Estado}}</td>
 					<td>{{$poliza->Renovacion}}</td>
 					<td>{{$poliza->Vigecia_Hasta}}</td>

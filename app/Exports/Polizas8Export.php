@@ -8,7 +8,9 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
 
-class Polizas7Export implements FromCollection, WithHeadings,ShouldAutoSize
+
+
+class Polizas8Export implements FromCollection, WithHeadings,ShouldAutoSize
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -38,7 +40,8 @@ class Polizas7Export implements FromCollection, WithHeadings,ShouldAutoSize
                 )
         ->where('polizas.Estado', '=','1')
         
-        ->havingRaw('DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()) <= ? and DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()) >=?',[15,0] );
+        ->havingRaw('DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()) < ? and DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()) >=?',[30,15] )
+        ->get();
         return $polizas;
     }
 }

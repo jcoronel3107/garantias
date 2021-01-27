@@ -64,7 +64,7 @@
 											</li>
 											@endif @else
 											<li class="nav-item dropdown no-arrow">
-												<a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre><span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }} </span><img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60"><span class="caret"> </span>
+												<a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre><span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }} </span><img class="img-profile rounded-circle" src="{{ asset('storage/avatar/'.Auth::user()->avatar) }}"><span class="caret"> </span>
 								                                </a>
 												<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
 													<a class="dropdown-item" href="{{route('profile.index')}}">

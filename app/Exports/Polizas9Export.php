@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
 
-class Polizas7Export implements FromCollection, WithHeadings,ShouldAutoSize
+class Polizas9Export implements FromCollection, WithHeadings,ShouldAutoSize
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -37,8 +37,8 @@ class Polizas7Export implements FromCollection, WithHeadings,ShouldAutoSize
                  DB::raw('DATEDIFF(adddate(polizas.Vigencia_Desde, polizas.Plazo), CURDATE()) as Dias_Restantes')
                 )
         ->where('polizas.Estado', '=','1')
-        
-        ->havingRaw('DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()) <= ? and DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()) >=?',[15,0] );
+        ->where("Nombre_Contrato",'LIKE','%'.$query.'%')
+        ->get();
         return $polizas;
     }
 }

@@ -29,12 +29,12 @@
                   @csrf
                   @method('PUT')
                   <div class="form-group row">
-            				<label class="col-sm-3 col-form-label text-sm-right">Usuario</label>
-            				<div class="col-sm-9">
-            					<input type="text" class="form-control @error('name') is-invalid @enderror" name="name" maxlength="254" value="{{ old('name', Auth::user()->name) }}" required>
+                    <label class="col-sm-3 col-form-label text-sm-right">Usuario</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" maxlength="254" value="{{ old('name', Auth::user()->name) }}" required>
                       @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
-            				</div><!-- /.col -->
-            			</div><!-- /.form-group row -->
+                    </div><!-- /.col -->
+                  </div><!-- /.form-group row -->
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label text-sm-right">Email</label>
                     <div class="col-sm-9">
@@ -42,6 +42,7 @@
                       @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </div><!-- /.col -->
                   </div><!-- /.form-group row -->
+                  
                   <hr>
                   <div class="form-group row">
                     <div class="col-sm-4 mx-auto">
@@ -56,17 +57,17 @@
                 <hr>
                 <div class="row justify-content-center">
                   <div class="col-md-6 text-center mb-2">
-                    <img src="{{ Auth::user()->avatar }}" style="max-width: 100%" />
+                    <img src="{{ asset('storage/avatar/'.Auth::user()->avatar) }}" height="50px" style="max-width: 100%" />
                   </div>
                 </div><!-- /.row -->
                 <hr>
-                <form action="" method="post" enctype="multipart/form-data">
+                <form action="{{ route('profile.avatar') }}" method="post" enctype="multipart/form-data">
                   @csrf
                   @method('PUT')
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label text-sm-right">Cambiar foto</label>
                     <div class="col-sm-9">
-                      <input type="file" class="form-control-file @error('avatar') is-invalid @enderror" name="avatar" aria-describedby="fileHelp">
+                      <input type="file" required="" class="form-control-file @error('avatar') is-invalid @enderror" name="avatar" aria-describedby="fileHelp">
                       @error('avatar') <div class="invalid-feedback">{{ $message }}</div> @enderror
                       <small class="form-text text-muted">Adjunta un archivo válido de imagen. No debe exceder los 2MB.</small>
                     </div><!-- /.col -->
@@ -87,26 +88,26 @@
                   @csrf
                   @method('PUT')
                   <div class="form-group row">
-            				<label class="col-sm-3 col-form-label text-sm-right">Actual</label>
-            				<div class="col-sm-9">
-            					<input type="password" class="form-control @error('pass1') is-invalid @enderror" name="pass1" maxlength="254" value="{{ old('pass1') }}" required>
+                    <label class="col-sm-3 col-form-label text-sm-right">Actual</label>
+                    <div class="col-sm-9">
+                      <input type="password" class="form-control @error('pass1') is-invalid @enderror" name="pass1" maxlength="254" value="{{ old('pass1') }}" required>
                       @error('pass1') <div class="invalid-feedback">{{ $message }}</div> @enderror
-            				</div><!-- /.col -->
-            			</div><!-- /.form-group row -->
+                    </div><!-- /.col -->
+                  </div><!-- /.form-group row -->
                   <div class="form-group row">
-            				<label class="col-sm-3 col-form-label text-sm-right">Nueva</label>
-            				<div class="col-sm-9">
-            					<input type="password" class="form-control @error('nuevo') is-invalid @enderror" name="nuevo" maxlength="254" value="{{ old('nuevo') }}" required>
+                    <label class="col-sm-3 col-form-label text-sm-right">Nueva</label>
+                    <div class="col-sm-9">
+                      <input type="password" class="form-control @error('nuevo') is-invalid @enderror" name="nuevo" maxlength="254" value="{{ old('nuevo') }}" required>
                       @error('nuevo') <div class="invalid-feedback">{{ $message }}</div> @enderror
-            				</div><!-- /.col -->
-            			</div><!-- /.form-group row -->
+                    </div><!-- /.col -->
+                  </div><!-- /.form-group row -->
                   <div class="form-group row">
-            				<label class="col-sm-3 col-form-label text-sm-right">Repetir</label>
-            				<div class="col-sm-9">
-            					<input type="password" class="form-control @error('nuevo_confirmation') is-invalid @enderror" name="nuevo_confirmation" maxlength="254" value="{{ old('nuevo_confirmation') }}" required>
+                    <label class="col-sm-3 col-form-label text-sm-right">Repetir</label>
+                    <div class="col-sm-9">
+                      <input type="password" class="form-control @error('nuevo_confirmation') is-invalid @enderror" name="nuevo_confirmation" maxlength="254" value="{{ old('nuevo_confirmation') }}" required>
                       @error('nuevo_confirmation') <div class="invalid-feedback">{{ $message }}</div> @enderror
-            				</div><!-- /.col -->
-            			</div><!-- /.form-group row -->
+                    </div><!-- /.col -->
+                  </div><!-- /.form-group row -->
                   <hr>
                   <div class="form-group row">
                     <div class="col-sm-4 mx-auto">

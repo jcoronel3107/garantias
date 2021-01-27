@@ -7,66 +7,8 @@
 
 	@section( "cuerpo" )
 		<h1 class="mt-5 shadow p-3 mb-5 bg-white rounded text-danger">Consulta Información de Polizas</h1>
-		@if(Session::has('Importacion_Correcta'))
-			<div class="alert alert-success alert-dismissible fade show" role="alert">
-			{{session('Notificacion_Correcta')}}
-			<button type="button"
-				class="close"
-				data-dismiss="alert"
-				aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-		</div>
-
-		@endif
-		@if(Session::has('Importacion_Correcta'))
-			<div class="alert alert-success alert-dismissible fade show" role="alert">
-			{{session('Importacion_Correcta')}}
-			<button type="button"
-				class="close"
-				data-dismiss="alert"
-				aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-		</div>
-
-		@endif
-		@if(Session::has('Registro_Borrado'))
-		<div class="alert alert-danger alert-dismissible fade show" role="alert">
-		{{session('Registro_Borrado')}}
-		<button type="button"
-				class="close"
-				data-dismiss="alert"
-				aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-		</div>
-
-		@endif
-		@if(Session::has('Registro_Actualizado'))
-		<div class="alert alert-success alert-dismissible fade show" role="alert">
-		{{session('Registro_Actualizado')}}
-		<button type="button"
-				class="close"
-				data-dismiss="alert"
-				aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-		</div>
-
-		@endif
-		@if(Session::has('Registro_Almacenado'))
-		<div class="alert alert-primary alert-dismissible fade show" role="alert">
-		{{session('Registro_Almacenado')}}
-		<button type="button"
-				class="close"
-				data-dismiss="alert"
-				aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-		</div>
-
-		@endif
+		@include('poliza.messages')
+		
 		<ul class="nav justify-content-end">
 		  <li class="nav-item">
 		      <a class="btn btn-outline-danger" href="poliza/create">Nuevo</a>
@@ -76,50 +18,72 @@
 		</ul>
 		<hr style="border:2px;">
 		@include('poliza.search')
-		<table class="table table-hover ">
+		<table class="table table-hover table-responsive table_condensed">
 			<thead>
 				<tr class="table-primary">
+					<td>Opciones</td>
 					
 					<td>Codigo_Poliza</td>
 					<td>Valor_Poliza</td>
 					<td>Tipo_Poliza</td>
 					<td>Vigencia_Desde</td>
 					<td>Plazo</td>
+					<td>Aseguradora</td>
+					<td>Afianzado</td>
+					<td>Codigo_Contrato</td>
+					<td>Nombre_Contrato</td>
 					<td>Estado</td>
+					<td>Renovacion</td>
+					<td>Vigecia_Hasta</td>
+					<td>Dias_Restantes</td>
 					
-					<td>Opciones</td>
 			</thead>
 			<tbody>
 				@foreach($polizas as $poliza)
 				<tr>
-					
-					<td>{{$poliza->Codigo_Poliza}}</td>
-					<td>USD $.{{$poliza->Valor_Poliza}}</td>
-					<td>{{$poliza->Tipo_Poliza}}</td>
-					<td>{{$poliza->Vigencia_Desde}}</td>
-					<td>{{$poliza->Plazo}}</td>
-					<td>{{$poliza->Estado}}</td>
-					
 					<td>
 						<a class="btn btn-outline-danger " href="{{route('poliza.edit',$poliza->id)}}" role="button"><i class="far fa-edit"></i></a>
 
 						<a class="btn btn-outline-danger" href="poliza/notificar/{{$poliza->id}}" role="button"><i class="fa fa-paper-plane" aria-hidden="true"></i></a>
 					</td>
+					
+					<td>{{$poliza->Codigo_Poliza}}</td>
+					<td>USD${{$poliza->Valor_Poliza}}</td>
+					<td>{{$poliza->Tipo_Poliza}}</td>
+					<td>{{$poliza->Vigencia_Desde}}</td>
+					<td>{{$poliza->Plazo}}</td>
+					<td>{{$poliza->Razon_Social}}</td>
+					<td>{{$poliza->afianzado}}</td>
+					<td>{{$poliza->Codigo_Contrato}}</td>
+					<td>{{$poliza->Nombre_Contrato}}</td>
+					<td>{{$poliza->Estado}}</td>
+					<td>{{$poliza->Renovacion}}</td>
+					<td>{{$poliza->Vigecia_Hasta}}</td>
+					<td>{{$poliza->Dias_Restantes}}</td>
+					
 				</tr>
 				@endforeach
 				</tr>
 			</tbody>
 			<tfoot>
 				<tr class="table-primary">
+					<td>Opciones</td>
 					
 					<td>Codigo_Poliza</td>
 					<td>Valor_Poliza</td>
 					<td>Tipo_Poliza</td>
 					<td>Vigencia_Desde</td>
 					<td>Plazo</td>
+					<td>Aseguradora</td>
+					<td>Afianzado</td>
+					<td>Codigo_Contrato</td>
+					<td>Nombre_Contrato</td>
 					<td>Estado</td>
+					<td>Renovacion</td>
+					<td>Vigecia_Hasta</td>
+					<td>Dias_Restantes</td>
 					
-					<td>Opciones</td>
+					
 				</tr>
 
 			</tfoot>

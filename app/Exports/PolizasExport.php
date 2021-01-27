@@ -40,7 +40,7 @@ class PolizasExport implements FromCollection, WithHeadings,ShouldAutoSize
         ->select('Codigo_Poliza', 'Valor_Poliza','Tipo_Poliza','Vigencia_Desde','Plazo','aseguradoras.Razon_Social as Razon_Social','contratos.Codigo_Contrato as Codigo_Contrato','contratos.Nombre_Contrato as Denominacion_Contrato','polizas.Estado','Renovacion','polizas.created_at')
         ->where('polizas.Estado', '=','1')
         ->get();
-        //return Poliza::all();
+        
         return $polizas;
     }
 }

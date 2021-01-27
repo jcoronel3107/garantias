@@ -16,7 +16,17 @@
 		</ul>
 
 		<hr style="border:2px;">
-		@include('poliza.search2')
+		<form method="get" action="/consult/polizas/" autocomplete="off" role="search" >
+			<div class="form-group col-12">
+				<div class="input-group "> {{csrf_field()}}
+					<input type="text" class="form-control" value="{{$query}}" name="searchText" placeholder="Buscar x Administrador..." >
+					<span class="input-group-append">
+						<button type="submit" class="btn btn-primary">Buscar</button>
+					</span>
+				</div>
+
+			</div>
+		</form>
 		<table name="resultados" id="resultados" class="table table-hover table-responsive table_condensed">
 			<thead>
 				<tr class="table-primary">
@@ -27,7 +37,7 @@
 					<td>Vigencia_Desde</td>
 					<td>Plazo</td>
 					<td>Aseguradora</td>
-					
+					<td>Afianzado</td>
 					<td>Codigo_Contrato</td>
 					<td>Nombre_Contrato</td>
 					
@@ -47,6 +57,7 @@
 					<td>{{$poliza->Vigencia_Desde}}</td>
 					<td>{{$poliza->Plazo}}</td>
 					<td>{{$poliza->Razon_Social}}</td>
+					<td>{{$poliza->afianzado}}</td>
 					<td>{{$poliza->Codigo_Contrato}}</td>
 					<td>{{$poliza->Nombre_Contrato}}</td>
 					<td>{{$poliza->Estado}}</td>

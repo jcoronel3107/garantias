@@ -65,84 +65,183 @@ class ConsultaController extends Controller
             $polizas = DB::table('polizas')
                 ->join('aseguradoras', 'aseguradora_id', '=', 'aseguradoras.id')
                 ->join('contratos','contrato_id','=','contratos.id')
+                ->join('afianzados','afianzado_id','=','afianzados.id')
                 ->select('polizas.id','Codigo_Poliza','Valor_Poliza','Tipo_Poliza','Vigencia_Desde','Plazo',
-                 'aseguradoras.Razon_Social as Razon_Social',
+                 'aseguradoras.Razon_Social as Razon_Social','afianzados.afianzado',
                  'contratos.Codigo_Contrato',
                  'contratos.Nombre_Contrato','polizas.Estado','Renovacion',
                  DB::raw('adddate(Vigencia_Desde, Plazo) as Vigecia_Hasta'),
-                 DB::raw('DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()) as Dias_Restantes')
-                )
+                 DB::raw('DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()) as Dias_Restantes'))
+                ->where("administrador",'LIKE','%'.$query.'%')
                 ->where('polizas.Estado', '=','1')
                 ->OrderBy('Codigo_Poliza','desc')
-                ->paginate(5);
-                //->where(DB::raw('DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()' <= 300))
-                //->get();
-        /*return $polizas;
-            $polizas = DB::table('polizas')
-            ->join('aseguradoras', 'aseguradora_id', '=', 'aseguradoras.id')
-            ->join('contratos','contrato_id','=','contratos.id')
-            ->select('Codigo_Poliza', 'Valor_Poliza','Tipo_Poliza','Vigencia_Desde','Plazo','aseguradoras.Razon_Social as Razon_Social','contratos.Codigo_Contrato as Codigo_Contrato','polizas.Estado','Renovacion','polizas.created_at')
-            ->where('polizas.Estado', '=','1')
-            ->get();*/
+                ->paginate(10);
+                
             return view( "consultas.polizasactivas", compact( "polizas","query"  ) );
         }
     }
 
-    public function polizasall_reg()
+    public function polizasall_reg(Request $request)
     {
+        $query = trim($request->get('searchText'));
         $polizas = DB::table('polizas')
         ->join('aseguradoras', 'aseguradora_id', '=', 'aseguradoras.id')
         ->join('contratos','contrato_id','=','contratos.id')
-        ->select('Codigo_Poliza', 'Valor_Poliza','Tipo_Poliza','Vigencia_Desde','Plazo','aseguradora_id','aseguradoras.Razon_Social as Razon_Social','contrato_id','contratos.Codigo_Contrato as Codigo_Contrato','polizas.Estado','Renovacion','Fecha_Cierre','polizas.created_at')
-        ->get();
-        return view( "consultas.polizastodas", compact( "polizas" ) );
+        ->join('afianzados','afianzado_id','=','afianzados.id')
+        ->select('Codigo_Poliza', 'Valor_Poliza','Tipo_Poliza','Vigencia_Desde','Plazo','aseguradoras.Razon_Social as Razon_Social','afianzados.afianzado','contrato_id','contratos.Codigo_Contrato as Codigo_Contrato','polizas.Estado','Renovacion','Fecha_Cierre','polizas.created_at')
+        ->where("administrador",'LIKE','%'.$query.'%')
+        ->OrderBy('Codigo_Poliza','desc')
+        ->paginate(10);
+        return view( "consultas.polizastodas", compact( "polizas","query" ) );
     }
 
-    public function polizasbuso_reg()
+    public function polizasbuso_reg(Request $request)
     {
+        $query = trim($request->get('searchText'));
         $polizas = DB::table('polizas')
-        ->join('aseguradoras', 'aseguradora_id', '=', 'aseguradoras.id')
-        ->join('contratos','contrato_id','=','contratos.id')
-        ->select('Codigo_Poliza', 'Valor_Poliza','Tipo_Poliza','Vigencia_Desde','Plazo','aseguradora_id','aseguradoras.Razon_Social as Razon_Social','contrato_id','contratos.Codigo_Contrato as Codigo_Contrato','polizas.Estado','Renovacion','polizas.created_at')
-        ->where('Tipo_Poliza', '=','Buen Uso Anticipo')
-        ->where('polizas.Estado', '=','1')
-        ->get();
-
-        return view( "consultas.polizasbuso", compact( "polizas" ) );
+                ->join('aseguradoras', 'aseguradora_id', '=', 'aseguradoras.id')
+                ->join('contratos','contrato_id','=','contratos.id')
+                ->join('afianzados','afianzado_id','=','afianzados.id')
+                ->select('polizas.id','Codigo_Poliza','Valor_Poliza','Tipo_Poliza','Vigencia_Desde','Plazo',
+                 'aseguradoras.Razon_Social as Razon_Social',
+                 'afianzados.afianzado',
+                 'contratos.Codigo_Contrato',
+                 'contratos.Nombre_Contrato',
+                 'contratos.administrador',
+                 'polizas.Estado','Renovacion',
+                 DB::raw('adddate(Vigencia_Desde, Plazo) as Vigecia_Hasta'),
+                 DB::raw('DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()) as Dias_Restantes')
+                )
+                ->where('Tipo_Poliza', '=','Buen Uso Anticipo')
+                ->where("administrador",'LIKE','%'.$query.'%')
+                ->where('polizas.Estado', '=','1')
+                ->OrderBy('Codigo_Poliza','desc')
+                ->paginate(10);
+        return view( "consultas.polizasbuso", compact( "polizas","query" ) );
     }
 
-    public function polizasfiel_reg()
+    public function polizasfiel_reg(Request $request)
     {
+        $query = trim($request->get('searchText'));
         $polizas = DB::table('polizas')
-        ->join('aseguradoras', 'aseguradora_id', '=', 'aseguradoras.id')
-        ->join('contratos','contrato_id','=','contratos.id')
-        ->select('Codigo_Poliza', 'Valor_Poliza','Tipo_Poliza','Vigencia_Desde','Plazo','aseguradora_id','aseguradoras.Razon_Social','contrato_id','contratos.Codigo_Contrato','polizas.Estado','Renovacion','polizas.created_at')
-        ->where('Tipo_Poliza', '=','Fiel_Cumplimiento')
-        ->where('polizas.Estado', '=','1')
-        ->get();
-
-        return view( "consultas.polizasfiel", compact( "polizas" ) );
+                ->join('aseguradoras', 'aseguradora_id', '=', 'aseguradoras.id')
+                ->join('contratos','contrato_id','=','contratos.id')
+                ->join('afianzados','afianzado_id','=','afianzados.id')
+                ->select('polizas.id','Codigo_Poliza','Valor_Poliza','Tipo_Poliza','Vigencia_Desde','Plazo',
+                 'aseguradoras.Razon_Social as Razon_Social',
+                 'afianzados.afianzado',
+                 'contratos.Codigo_Contrato',
+                 'contratos.Nombre_Contrato',
+                 'contratos.administrador',
+                 'polizas.Estado','Renovacion',
+                 DB::raw('adddate(Vigencia_Desde, Plazo) as Vigecia_Hasta'),
+                 DB::raw('DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()) as Dias_Restantes')
+                )
+                ->where('Tipo_Poliza', '=','Fiel_Cumplimiento')
+                ->where('polizas.Estado', '=','1')
+                ->where("administrador",'LIKE','%'.$query.'%')
+                ->OrderBy('Codigo_Poliza','desc')
+                ->paginate(10);
+        return view( "consultas.polizasfiel", compact( "polizas","query" ) );
     }
 
-    public function polizasxv15_reg()
+    public function polizasxv15_reg(Request $request)
     {
+        $query = trim($request->get('searchText'));
         $polizas = DB::table('polizas')
         ->join('aseguradoras', 'aseguradora_id', '=', 'aseguradoras.id')
         ->join('contratos','contrato_id','=','contratos.id')
-        ->select(DB::raw('Codigo_Poliza',
-                 'Valor_Poliza',
-                 'Tipo_Poliza',
-                 'Vigencia_Desde',
-                 'Plazo',
-                 'adddate(Vigencia_Desde, Plazo) as Vigecia_Hasta',
-                 'DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()) as Dias_Restantes',
-                 'aseguradora_id','aseguradoras.Razon_Social as Razon_Social','contrato_id',
-                 'contratos.Codigo_Contrato as Codigo_Contrato','Estado','Renovacion','Fecha_Cierre',
-                 'polizas.created_at'))
+        ->join('afianzados','afianzado_id','=','afianzados.id')
+        ->select('polizas.id','Codigo_Poliza','Valor_Poliza','Tipo_Poliza','Vigencia_Desde','Plazo',
+                 'aseguradoras.Razon_Social as Razon_Social',
+                 'afianzados.afianzado',
+                 'contratos.Codigo_Contrato',
+                 'contratos.Nombre_Contrato',
+                 'contratos.administrador',
+                 'polizas.Estado','Renovacion',
+                 DB::raw('adddate(polizas.Vigencia_Desde, polizas.Plazo) as Vigecia_Hasta'),
+                 DB::raw('DATEDIFF(adddate(polizas.Vigencia_Desde, polizas.Plazo), CURDATE()) as Dias_Restantes')
+                )
         ->where('polizas.Estado', '=','1')
-        ->where('DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()) <= ? and DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()) >= ?',[15,0])
-        ->get();
+        ->where("administrador",'LIKE','%'.$query.'%')
 
-        return view( "consultas.polizas15", compact( "polizas" ) );
+        ->havingRaw('DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()) <= ? and DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()) >=?',[15,0] ) 
+        ->paginate(10);
+
+        return view( "consultas.polizas15", compact( "polizas","query" ) );
+    }
+
+     public function polizasxv30_reg(Request $request)
+    {
+        $query = trim($request->get('searchText'));
+        $polizas = DB::table('polizas')
+        ->join('aseguradoras', 'aseguradora_id', '=', 'aseguradoras.id')
+        ->join('contratos','contrato_id','=','contratos.id')
+        ->join('afianzados','afianzado_id','=','afianzados.id')
+        ->select('polizas.id','Codigo_Poliza','Valor_Poliza','Tipo_Poliza','Vigencia_Desde','Plazo',
+                 'aseguradoras.Razon_Social as Razon_Social',
+                 'afianzados.afianzado',
+                 'contratos.Codigo_Contrato',
+                 'contratos.Nombre_Contrato',
+                 'contratos.administrador',
+                 'polizas.Estado','Renovacion',
+                 DB::raw('adddate(polizas.Vigencia_Desde, polizas.Plazo) as Vigecia_Hasta'),
+                 DB::raw('DATEDIFF(adddate(polizas.Vigencia_Desde, polizas.Plazo), CURDATE()) as Dias_Restantes')
+                )
+        ->where('polizas.Estado', '=','1')
+        ->where("administrador",'LIKE','%'.$query.'%')
+
+        ->havingRaw('DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()) < ? and DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()) >=?',[30,15] ) 
+        ->paginate(10);
+
+        return view( "consultas.polizas30", compact( "polizas","query" ) );
+    }
+
+    public function polizasxafianzado(Request $request)
+    {
+        $query = trim($request->get('searchText'));
+        $polizas = DB::table('polizas')
+                ->join('aseguradoras', 'aseguradora_id', '=', 'aseguradoras.id')
+                ->join('contratos','contrato_id','=','contratos.id')
+                ->join('afianzados','afianzado_id','=','afianzados.id')
+                ->select('polizas.id','Codigo_Poliza','Valor_Poliza','Tipo_Poliza','Vigencia_Desde','Plazo',
+                 'aseguradoras.Razon_Social as Razon_Social',
+                 'afianzados.afianzado',
+                 'contratos.Codigo_Contrato',
+                 'contratos.Nombre_Contrato',
+                 'contratos.administrador',
+                 'polizas.Estado','Renovacion',
+                 DB::raw('adddate(Vigencia_Desde, Plazo) as Vigecia_Hasta'),
+                 DB::raw('DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()) as Dias_Restantes')
+                )
+                ->where('polizas.Estado', '=','1')
+                ->where("afianzado",'LIKE','%'.$query.'%')
+                ->OrderBy('afianzado','desc')
+                ->paginate(10);
+        return view( "consultas.polizasxafianzado", compact( "polizas","query" ) );
+    }
+
+    public function polizasxcontrato(Request $request)
+    {
+        $query = trim($request->get('searchText'));
+        $polizas = DB::table('polizas')
+                ->join('aseguradoras', 'aseguradora_id', '=', 'aseguradoras.id')
+                ->join('contratos','contrato_id','=','contratos.id')
+                ->join('afianzados','afianzado_id','=','afianzados.id')
+                ->select('polizas.id','Codigo_Poliza','Valor_Poliza','Tipo_Poliza','Vigencia_Desde','Plazo',
+                 'aseguradoras.Razon_Social as Razon_Social',
+                 'afianzados.afianzado',
+                 'contratos.Codigo_Contrato',
+                 'contratos.Nombre_Contrato',
+                 'contratos.administrador',
+                 'polizas.Estado','Renovacion',
+                 DB::raw('adddate(Vigencia_Desde, Plazo) as Vigecia_Hasta'),
+                 DB::raw('DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()) as Dias_Restantes')
+                )
+                ->where('polizas.Estado', '=','1')
+                ->where("Nombre_Contrato",'LIKE','%'.$query.'%')
+                ->OrderBy('Nombre_Contrato','desc')
+                ->paginate(10);
+        return view( "consultas.polizasxcontrato", compact( "polizas","query" ) );
     }
 }

@@ -37,13 +37,7 @@ class Polizas2Export implements FromCollection, WithHeadings,ShouldAutoSize
 
     public function collection()
     {
-    	 /*$polizas = DB::table('polizas')
-        ->join('aseguradoras', 'aseguradora_id', '=', 'aseguradoras.id')
-        ->join('contratos','contrato_id','=','contratos.id')
-        ->select('Codigo_Poliza', 'Valor_Poliza','Tipo_Poliza','Vigencia_Desde','Plazo','aseguradora_id','aseguradoras.Razon_Social as Razon_Social','contrato_id','contratos.Codigo_Contrato as Codigo_Contrato','Estado','Renovacion','Fecha_Cierre','polizas.created_at')
-        ->where('Estado', '=','1')
-        ->get();
-        return $polizas;*/
+    	 
         $polizas = DB::table('polizas')
     ->join('aseguradoras', 'aseguradora_id', '=', 'aseguradoras.id')
     ->join('contratos','contrato_id','=','contratos.id')
@@ -55,9 +49,9 @@ class Polizas2Export implements FromCollection, WithHeadings,ShouldAutoSize
      DB::raw('DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()) as Dias_Restantes')
     )
     ->where('polizas.Estado', '=','1')
-    //->where(DB::raw('DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()' <= 300))
+    
     ->OrderBy('Codigo_Poliza','desc')
-    ->paginate(7);
+    ->paginate(10);
     ->get();
     return $polizas;
     }

@@ -103,6 +103,9 @@
 	           	if ($(this).val() == "8") {
 	           		 window.location="/consult/polizas8/"
 	           		};
+	           	if ($(this).val() == "9") {
+	           		 window.location="/consult/polizas9/"
+	           		};
 
 	    		});
 

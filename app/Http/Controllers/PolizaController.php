@@ -12,6 +12,10 @@ use App\Exports\ Polizas2Export;
 use App\Exports\ Polizas3Export;
 use App\Exports\ Polizas4Export;
 use App\Exports\ Polizas5Export;
+use App\Exports\ Polizas6Export;
+use App\Exports\ Polizas7Export;
+use App\Exports\ Polizas8Export;
+use App\Exports\ Polizas9Export;
 use App\Imports\ PolizasImport;
 use Illuminate\ Http\ Request;
 use Illuminate\ Support\Carbon;
@@ -20,6 +24,7 @@ use Illuminate\ Support\ Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\ Excel\ Facades\ Excel;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\RenovacionReceived;
 
 class PolizaController extends Controller
 {
@@ -39,10 +44,27 @@ class PolizaController extends Controller
         if($request)
         {
             $query = trim($request->get('searchText'));
-            $polizas = Poliza::where("Codigo_Poliza",'LIKE','%'.$query.'%')
-              ->where("Estado","=","1")
-              ->OrderBy('Codigo_Poliza','desc')
-              ->paginate(7);
+            
+
+            $polizas = DB::table('polizas')
+                ->join('aseguradoras', 'aseguradora_id', '=', 'aseguradoras.id')
+                ->join('contratos','contrato_id','=','contratos.id')
+                ->join('afianzados','afianzado_id','=','afianzados.id')
+                ->select('polizas.id','Codigo_Poliza','Valor_Poliza','Tipo_Poliza','Vigencia_Desde','Plazo',
+                 'aseguradoras.Razon_Social as Razon_Social',
+                 'afianzados.afianzado',
+                 'contratos.Codigo_Contrato',
+                 'contratos.Nombre_Contrato',
+                 'contratos.administrador',
+                 'polizas.Estado','Renovacion',
+                 DB::raw('adddate(Vigencia_Desde, Plazo) as Vigecia_Hasta'),
+                 DB::raw('DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()) as Dias_Restantes')
+                )
+                ->where('Tipo_Poliza', '=','Buen Uso Anticipo')
+                ->where("administrador",'LIKE','%'.$query.'%')
+                ->where('polizas.Estado', '=','1')
+                ->OrderBy('Codigo_Poliza','desc')
+                ->paginate(10);
             return view( "/poliza.index", compact( "polizas","query" ) );
         }
     }
@@ -198,9 +220,24 @@ class PolizaController extends Controller
         return Excel::download(new Polizas5Export, 'polizasfielvigentes.xlsx');
     }
 
+    public function export6()
+    {
+        return Excel::download(new Polizas6Export, 'polizasxafianzado.xlsx');
+    }
+
     public function export7()
     {
         return Excel::download(new Polizas7Export, 'polizasvig15.xlsx');
+    }
+
+    public function export8()
+    {
+        return Excel::download(new Polizas8Export, 'polizasvig30.xlsx');
+    }
+
+    public function export9()
+    {
+        return Excel::download(new Polizas9Export, 'polizasxcontrato.xlsx');
     }
 
     public function importacion(Request $request)
@@ -229,18 +266,84 @@ class PolizaController extends Controller
 
     public function notificar($id)
     {
-       
-          $poliza = Poliza::findOrFail( $id );
-          //dd($poliza);
+       $poliza = Poliza::findOrFail( $id );
+          /*$poliza = DB::table('polizas')
+                ->join('aseguradoras', 'aseguradora_id', '=', 'aseguradoras.id')
+                ->join('contratos','contrato_id','=','contratos.id')
+                ->join('afianzados','afianzado_id','=','afianzados.id')
+                ->select('polizas.id','polizas.Codigo_Poliza','polizas.Valor_Poliza','polizas.Tipo_Poliza','polizas.Vigencia_Desde','polizas.Plazo',
+                 'aseguradoras.Razon_Social as Razon_Social','afianzados.afianzado',
+                 'contratos.Codigo_Contrato',
+                 'contratos.Nombre_Contrato','polizas.Estado','Renovacion',
+                 DB::raw('adddate(Vigencia_Desde, Plazo) as Vigecia_Hasta'),
+                 DB::raw('DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()) as Dias_Restantes'))
+                ->where("polizas.id",'=',$id)
+                ->get();*/
+                
+          
           return view( "/poliza.notifica", compact("poliza"));
        
     }
 
+    public function BuscarPoliza($id)
+    {
+
+          $poliza = DB::table('polizas')
+                ->join('aseguradoras', 'aseguradora_id', '=', 'aseguradoras.id')
+                ->join('contratos','contrato_id','=','contratos.id')
+                ->select('polizas.id as poliza_id',
+                  'polizas.Codigo_Poliza',
+                  'polizas.Valor_Poliza',
+                  'polizas.Tipo_Poliza',
+                  'polizas.Vigencia_Desde',
+                  'polizas.Plazo',
+                  'polizas.Estado',
+                  'Renovacion',
+                  'aseguradoras.id as aseguradora_id',
+                  'aseguradoras.Razon_Social as Razon_Social',
+                  'contratos.id as contrato_id',
+                  'contratos.Codigo_Contrato',
+                  'contratos.Nombre_Contrato')
+                  ->where('polizas.Codigo_Poliza', '=',$id)
+                  ->get();
+          
+          return response()->json(array($poliza));
+    }
+
+    public function Num_Renovacion($id)
+    {
+
+        $poliza = DB::table('polizas')
+        ->where('polizas.Codigo_Poliza', '=', $id)
+        ->selectRaw('count(*) as Num_Renovacion')
+        ->get();
+        return response()->json(array($poliza));
+    }
+
+
     public function notificacion(Request $request)
     {
-      $destinatario = $poliza->contrato->mail_administrador;
-      Mail::to($destinatario)->send(new RenovacionReceived($reservation));
+      $destinatario = $request->email;
+     
+      $poliza = Poliza::findOrFail( $request->id_Poliza );
+      /*$poliza = DB::table('polizas')
+                ->join('aseguradoras', 'aseguradora_id', '=', 'aseguradoras.id')
+                ->join('contratos','contrato_id','=','contratos.id')
+                ->join('afianzados','afianzado_id','=','afianzados.id')
+                ->select('polizas.id','Codigo_Poliza','Valor_Poliza','Tipo_Poliza','Vigencia_Desde','Plazo',
+                 'aseguradoras.Razon_Social as Razon_Social','afianzados.afianzado',
+                 'contratos.Codigo_Contrato',
+                 'contratos.Nombre_Contrato','polizas.Estado','Renovacion',
+                 DB::raw('adddate(Vigencia_Desde, Plazo) as Vigecia_Hasta'),
+                 DB::raw('DATEDIFF(adddate(Vigencia_Desde, Plazo), CURDATE()) as Dias_Restantes'))
+                ->where("polizas.id",'=','$request->id_Poliza')
+                ->where('polizas.Estado', '=','1')
+                ->get();*/
+                
+      Mail::to($destinatario)->send(new RenovacionReceived($poliza));
       Session::flash('Notificacion_Correcta',"Notificacion realizada a -> ".$destinatario);
-      return view("/poliza");
+      return redirect()
+       ->route('poliza.index');
+      
     }
 }

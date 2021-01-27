@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Spatie\Permission\Models\Role;
 
 class ProfileController extends Controller
 {
@@ -28,6 +30,7 @@ class ProfileController extends Controller
 
     public function index()
     {
+
         return view('/perfil.profile');
     }
 
@@ -94,7 +97,11 @@ class ProfileController extends Controller
 
         $user->name = $request->input('name');
         $user->email = $request->input('email');
-        if(! $user->isDirty()){ return redirect()->route('profile.index')->with("status", 'No se detectaron cambios a realizar'); }
+
+
+        if(! $user->isDirty())
+            { return redirect()->route('profile.index')->with("status", 'No se detectaron cambios a realizar');
+             }
          $user->save();
 
         return redirect()->route('profile.index')->with("status", 'Datos actualizados');
@@ -112,22 +119,22 @@ class ProfileController extends Controller
     }
 
     public function update_avatar(Request $request){
-        $validaciones = [
-          'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ];
-        $validator = Validator::make($request->all(), $validaciones, $this->errores);
-         if ($validator->fails()) {
-           return redirect(route('profile.update', ['#foto']))->withErrors($validator);
-         }
-
         $user = \Auth::user();
-
-        $avatarName = $user->id.'_avatar'.time().'.'.request()->avatar->getClientOriginalExtension();
-
-        $request->avatar->storeAs('avatars', $avatarName);
-
-        $user->avatar = $avatarName;
+        $fileavatar = $request->file('avatar');
+        
+        $nombre = $user->id.'_avatar'.time().'.'.request()->avatar->getClientOriginalExtension();
+        
+        $validation = $request->validate([
+        'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1048'
+        
+        ]);
+        $user->avatar = $nombre;
         $user->save();
+        $file      = $validation['avatar']; // get the validated file        
+        $path      = $file->storeAs('avatar/', $nombre);
+
+
+        
 
         return redirect()->route('profile.index', ['#foto'])->with("status", 'Foto actualizada');
     }// /update_avatar

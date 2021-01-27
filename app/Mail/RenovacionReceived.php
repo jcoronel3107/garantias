@@ -29,6 +29,6 @@ class RenovacionReceived extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.poliza');
+        return $this->view('mails.polliza');
     }
 }
